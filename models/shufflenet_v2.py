@@ -100,8 +100,8 @@ def build_shufflenet_v2(
     return model
 
 
-def create_0_5_shufflenet_yolov8(num_classes):
-    backbonde_shuffle = build_shufflenet_v2()
+def create_0_5_shufflenet_yolov8(num_classes, **kwargs):
+    backbonde_shuffle = build_shufflenet_v2(**kwargs)
     model_shuffle = keras_cv.models.YOLOV8Detector(
         num_classes=num_classes,
         bounding_box_format="xyxy",
