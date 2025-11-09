@@ -1,3 +1,4 @@
+import kagglehub
 import tensorflow as tf
 from tensorflow.data import AUTOTUNE
 import keras_cv
@@ -6,6 +7,12 @@ import pandas as pd
 import os
 from PIL import Image
 import numpy as np
+
+
+def download_kaggle_data():
+    path = kagglehub.dataset_download("trainingdatapro/cars-video-object-tracking")
+    print("Path to dataset files:", path)
+    return path
 
 
 def parse_annotations(annotations_path):
@@ -143,3 +150,19 @@ def split_data(prepared_images, prepared_boxes, prepared_labels, split_ratio=0.2
     train_ds = make_dataset(train_raw, batch_size=4, shuffle_buffer=1000, augment=True)
     val_ds = make_dataset(val_raw, batch_size=4, shuffle_buffer=0, augment=False)
     return train_ds, val_ds
+
+
+def run_data_preparation_pipeline():
+    annotations_by_image, cat_mapping, cat_mapping_r = parse_annotations(path)
+    boxes, images, labels = annotations_by_image['boxes'].tolist(), annotations_by_image['image'].tolist(), \
+    annotations_by_image['categories'].tolist()
+    prepared_images, prepared_boxes, prepared_labels = preprocess_images_and_boxes(images, boxes, labels,
+                                                                                   f"{path}/images", cat_mapping_r)
+    train_ds, val_ds = split_data(prepared_images, prepared_boxes, prepared_labels)
+    return {
+        'train_ds': train_ds,
+        'val_ds': val_ds,
+        'prepared_images': prepared_images,
+        'prepared_boxes': prepared_boxes,
+        'prepared_labels': prepared_labels
+    }
