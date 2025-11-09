@@ -1,0 +1,16 @@
+name: deep_learning
+channels:
+  - defaults
+dependencies:
+  - python=3.11
+  - keras==3.10.0
+  - matplotlib
+  - pandas
+  - seaborn
+  - tensorflow==2.17
+  - pip:
+      - kagglehub==0.3.12
+      - keras-core==0.1.7
+      - keras-cv==0.9.0
+      - keras-flops==0.1.2
+prefix: /Users/bsintsov/miniconda3/envs/deep_learning
