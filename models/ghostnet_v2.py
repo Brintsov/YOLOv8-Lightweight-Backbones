@@ -160,9 +160,9 @@ class GhostBottleneck(layers.Layer):
 
 
 def build_ghostnet_backbone(
-    input_shape=(None, None, 3),
-    width_multiplier=1.0,
-    depth_multiplier=1.0,
+    input_shape=(640, 640, 3),
+    width_multiplier=0.5,
+    depth_multiplier=0.5,
     widths=[16, 32, 64, 96, 122, 144],
     repeats=[1, 1, 2, 2, 2, 1],
     strides=[1, 2, 2, 2, 1, 2],
@@ -215,10 +215,8 @@ def build_ghostnet_backbone(
     return model
 
 
-def create_0_5_ghostnet_yolov8(num_classes):
-    backbone = build_ghostnet_backbone((640, 640, 3),
-                                       width_multiplier=0.5,
-                                       depth_multiplier=0.5)
+def create_0_5_ghostnet_yolov8(num_classes, **kwargs):
+    backbone = build_ghostnet_backbone(**kwargs)
     ghost_model = keras_cv.models.YOLOV8Detector(
         num_classes=num_classes,
         bounding_box_format='xyxy',
