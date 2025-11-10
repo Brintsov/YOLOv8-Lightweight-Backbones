@@ -112,7 +112,7 @@ class YOLOv8LiteWrapper:
             self, img, class_names, score_thr=0.25
     ):
         boxes, scores, cls_ids = self(tf.cast(img, tf.float16)).values()
-
+        img = img[0]
         if img.shape[2] == 3 and img.dtype != np.uint8:
             vis = img.astype(np.uint8)
         else:
