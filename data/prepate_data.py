@@ -153,6 +153,7 @@ def split_data(prepared_images, prepared_boxes, prepared_labels, split_ratio=0.2
 
 
 def run_data_preparation_pipeline():
+    path = download_kaggle_data()
     annotations_by_image, cat_mapping, cat_mapping_r = parse_annotations(path)
     boxes, images, labels = annotations_by_image['boxes'].tolist(), annotations_by_image['image'].tolist(), \
     annotations_by_image['categories'].tolist()
