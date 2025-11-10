@@ -74,7 +74,7 @@ class InferenceProfiler:
             "min_latency_sec": float(arr.min()),
             "max_latency_sec": float(arr.max()),
             "std_latency_sec": float(arr.std()),
-            "fps": float(1.0 / np.median(arr)),
+            f"{self._device}_fps": float(1.0 / np.median(arr)),
             "ram_delta_mb": round(ram_delta_mb, 2),
             "cpu_percent_before": cpu_percent_before,
             "cpu_percent_after": cpu_percent_after,
