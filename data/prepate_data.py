@@ -165,5 +165,7 @@ def run_data_preparation_pipeline():
         'val_ds': val_ds,
         'prepared_images': prepared_images,
         'prepared_boxes': prepared_boxes,
-        'prepared_labels': prepared_labels
+        'prepared_labels': prepared_labels,
+        'cat_mapping': cat_mapping,
+        'cat_mapping_r': cat_mapping_r
     }
