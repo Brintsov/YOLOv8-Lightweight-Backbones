@@ -11,7 +11,7 @@ from tensorflow.python.profiler.model_analyzer import profile
 from tensorflow.python.profiler.option_builder import ProfileOptionBuilder
 
 
-#@tf.function(jit_compile=False)
+@tf.function(jit_compile=False)
 def infer(model, x, device='CPU:0'):
     with tf.device(f"/{device}"):
         return model(x, training=False)
