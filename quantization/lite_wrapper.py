@@ -2,6 +2,8 @@ import os
 
 import numpy as np
 import tensorflow as tf
+import matplotlib.pyplot as plt
+import matplotlib.patches as patches
 
 
 REG_MAX = 16
@@ -105,3 +107,38 @@ class YOLOv8LiteWrapper:
         return {"boxes": boxes,
                 "scores": scores,
                 "classes": classes}
+
+    def detect_with_plot(
+            self, img, class_names, score_thr=0.25
+    ):
+        boxes, scores, cls_ids = self(tf.cast(img, tf.float16)).values()
+
+        if img.shape[2] == 3 and img.dtype != np.uint8:
+            vis = img.astype(np.uint8)
+        else:
+            vis = img.copy()
+        if vis.shape[2] == 3 and vis[..., ::-1].mean() < vis.mean():
+            vis = vis[..., ::-1]
+
+        fig, ax = plt.subplots(1, figsize=(10, 10))
+        ax.imshow(vis)
+        ax.axis("off")
+
+        for (x1, y1, x2, y2), score, cid in zip(boxes, scores, cls_ids):
+            if score < score_thr:
+                continue
+            w, h = x2 - x1, y2 - y1
+            colour = plt.cm.hsv(cid / len(class_names))
+            rect = patches.Rectangle((x1, y1), w, h,
+                                     linewidth=2, edgecolor=colour,
+                                     facecolor="none")
+            ax.add_patch(rect)
+            label = f"{class_names[cid]} {score:.2f}"
+            ax.text(x1, y1 - 2,
+                    label,
+                    fontsize=10,
+                    color="white",
+                    bbox=dict(facecolor=colour, edgecolor="none", pad=1.4))
+
+        plt.tight_layout()
+        plt.show()
