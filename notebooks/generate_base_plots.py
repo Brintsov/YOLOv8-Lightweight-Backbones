@@ -3,8 +3,8 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 from pathlib import Path
 
-CSV_PATH_QUANT = Path("../results/profiling_quantized_results_cpu.csv")
-CSV_PATH_NANO = Path("../results/profiling_results_cpu_and_gpu.csv")
+CSV_PATH_QUANT = Path("../docs/profiling_quantized_results_cpu.csv")
+CSV_PATH_NANO = Path("../docs/profiling_results_cpu_and_gpu.csv")
 
 OUTPUT_DIR = Path("../docs")
 OUTPUT_DIR.mkdir(exist_ok=True)
