@@ -120,7 +120,7 @@ class YOLOv8LiteWrapper:
         if vis.shape[2] == 3 and vis[..., ::-1].mean() < vis.mean():
             vis = vis[..., ::-1]
 
-        fig, ax = plt.subplots(1, figsize=(10, 10))
+        fig, ax = plt.subplots(1, figsize=(4, 4))
         ax.imshow(vis)
         ax.axis("off")
 
